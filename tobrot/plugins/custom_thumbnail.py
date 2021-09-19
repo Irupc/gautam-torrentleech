@@ -26,14 +26,17 @@ async def save_thumb_nail(client, message):
         Image.open(downloaded_file_name).convert("RGB").save(downloaded_file_name)
         metadata = extractMetadata(createParser(downloaded_file_name))
         height = 0
+        width = 0
         if metadata.has("height"):
             height = metadata.get("height")
+        if metadata.has("width"):
+            height = metadata.get("width")
         # resize image
         # ref: https://t.me/PyrogramChat/44663
         img = Image.open(downloaded_file_name)
         # https://stackoverflow.com/a/37631799/4723940
         # img.thumbnail((320, 320))
-        img.resize((320, height))
+        img.resize((width, height))
         img.save(thumb_image_path, "JPEG")
         # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
         os.remove(downloaded_file_name)
